@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../Life.Application/Life.Application.csproj" Id="f5f45e9e-18b8-43b8-8d69-de162f812606" />
+  <Project Path="../Life.Domain/Life.Domain.csproj" Id="bfedde54-d89c-4ee5-81d7-d2e37fe852ba" />
+  <Project Path="../Life.Infrastructure/Life.Infrastructure.csproj" Id="ee9afd2a-1f58-457b-a67c-40b62b4bba74" />
+  <Project Path="Life.API/Life.API.csproj" />
+</Solution>
