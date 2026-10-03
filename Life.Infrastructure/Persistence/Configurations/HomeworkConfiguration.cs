@@ -15,7 +15,7 @@ public sealed class HomeworkConfiguration : IEntityTypeConfiguration<Homework>
         builder.Property(homework => homework.Id)
             .ValueGeneratedNever();
 
-        builder.Property(homework => homework.Description)
+        builder.Property(homework => homework.Title)
             .IsRequired()
             .HasMaxLength(50);
 

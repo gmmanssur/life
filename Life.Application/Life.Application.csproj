@@ -11,4 +11,11 @@
     <ProjectReference Include="..\Life.Infrastructure\Life.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commons\Models\" />
+    <Folder Include="UseCases\Homeworks\GetHomework\" />
+    <Folder Include="UseCases\Homeworks\DeleteHomework\" />
+    <Folder Include="UseCases\Homeworks\UpdateHomework\" />
+  </ItemGroup>
+
 </Project>

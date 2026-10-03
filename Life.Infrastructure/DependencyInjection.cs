@@ -1,4 +1,6 @@
 ﻿using Life.Infrastructure.Persistence.Context;
+using Life.Infrastructure.Persistence.Repositories.Homework;
+using Life.Infrastructure.Persistence.Repositories.Homework.Create;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ namespace Life.Infrastructure
             services.AddDbContext<LifeDbContext>(options => options.UseNpgsql(connectionString));
 
             //addscope for repositoriesand interfaceshere
+            services.AddScoped<ICreateHomeworkRepository, CreateHomeworkRepository>();
 
             return services;
         }

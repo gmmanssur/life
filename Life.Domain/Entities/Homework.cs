@@ -5,26 +5,26 @@ namespace Life.Domain.Entities;
 public class Homework
 {
     public Guid Id { get; private set; }
-    public string Description { get; private set; }
+    public string Title { get; private set; }
     public HomeworkPriority Priority { get; private set; }
     public HomeworkFrequency Frequency { get; private set; }
 
     private Homework() { }
 
     public Homework(
-        string description,
+        string title,
         HomeworkPriority priority,
         HomeworkFrequency frequency)
     {
-        if (string.IsNullOrWhiteSpace(description))
+        if (string.IsNullOrWhiteSpace(title))
             throw new ArgumentException(
-                "Homework description is required.",
-                nameof(description));
+                "Homework title is required.",
+                nameof(title));
 
-        if (description.Length > 50)
+        if (title.Length > 50)
             throw new ArgumentException(
-                "Homework description cannot exceed 50 characters.",
-                nameof(description));
+                "Homework title cannot exceed 50 characters.",
+                nameof(title));
 
         if (!Enum.IsDefined(priority))
             throw new ArgumentException(
@@ -37,7 +37,7 @@ public class Homework
                 nameof(frequency));
 
         Id = Guid.NewGuid();
-        Description = description;
+        Title = title;
         Priority = priority;
         Frequency = frequency;
     }
