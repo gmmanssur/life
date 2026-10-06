@@ -15,7 +15,6 @@ namespace Life.Infrastructure
 
             services.AddDbContext<LifeDbContext>(options => options.UseNpgsql(connectionString));
 
-            //addscope for repositoriesand interfaceshere
             services.AddScoped<ICreateHomeworkRepository, CreateHomeworkRepository>();
 
             return services;
