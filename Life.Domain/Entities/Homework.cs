@@ -16,6 +16,31 @@ public class Homework
         HomeworkPriority priority,
         HomeworkFrequency frequency)
     {
+        Validate(title, priority, frequency);
+
+        Id = Guid.NewGuid();
+        Title = title;
+        Priority = priority;
+        Frequency = frequency;
+    }
+
+    public void Update(
+        string title,
+        HomeworkPriority priority,
+        HomeworkFrequency frequency)
+    {
+        Validate(title, priority, frequency);
+
+        Title = title;
+        Priority = priority;
+        Frequency = frequency;
+    }
+
+    private static void Validate(
+        string title,
+        HomeworkPriority priority,
+        HomeworkFrequency frequency)
+    {
         if (string.IsNullOrWhiteSpace(title))
             throw new ArgumentException(
                 "Homework title is required.",
@@ -35,10 +60,5 @@ public class Homework
             throw new ArgumentException(
                 "Invalid homework frequency.",
                 nameof(frequency));
-
-        Id = Guid.NewGuid();
-        Title = title;
-        Priority = priority;
-        Frequency = frequency;
     }
 }

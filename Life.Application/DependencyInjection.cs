@@ -1,5 +1,5 @@
-﻿using Life.Application.UseCases.Homeworks.CreateHomework;
-using Microsoft.Extensions.Configuration;
+﻿using Life.Application.Commons.Interfaces.Homework;
+using Life.Application.UseCases.Homeworks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Life.Application
@@ -8,7 +8,7 @@ namespace Life.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ICreateHomeworkService, CreateHomeworkService>();
+            services.AddScoped<IHomeworkService, HomeworkService>();
 
             return services;
         }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Life.Application\Life.Application.csproj" />
+    <ProjectReference Include="..\Life.Domain\Life.Domain.csproj" />
     <ProjectReference Include="..\Life.Infrastructure\Life.Infrastructure.csproj" />
     <ProjectReference Include="..\Life.Application\Life.Application.csproj" />
   </ItemGroup>

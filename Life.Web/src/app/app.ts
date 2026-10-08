@@ -7,6 +7,14 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
+
 export class App {
-  protected readonly title = signal('Life.Web');
+  title = 'Life';
+  description = 'Life Management Application';
+
+  counter = 0;
+
+  increment() {
+    this.counter++;
+  }
 }

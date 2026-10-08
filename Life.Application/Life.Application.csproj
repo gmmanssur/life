@@ -7,15 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Life.Domain\Life.Domain.csproj" />
-    <ProjectReference Include="..\Life.Infrastructure\Life.Infrastructure.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commons\Models\" />
-    <Folder Include="UseCases\Homeworks\GetHomework\" />
-    <Folder Include="UseCases\Homeworks\DeleteHomework\" />
-    <Folder Include="UseCases\Homeworks\UpdateHomework\" />
+    <ProjectReference Include="..\Life.Domain\Life.Domain.csproj" />
   </ItemGroup>
 
 </Project>
