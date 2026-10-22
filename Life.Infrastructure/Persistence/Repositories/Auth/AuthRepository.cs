@@ -1,4 +1,5 @@
 ﻿using Life.Application.Commons.Interfaces.Auth;
+using Life.Application.UseCases.Auth.Login;
 using Life.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,9 +7,11 @@ namespace Life.Infrastructure.Persistence.Repositories.Auth
 {
     public class AuthRepository(UserManager<ApplicationUser> userManager) : IAuthRepository
     {
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+
         public async Task<bool> EmailExistsAsync(string email)
         {
-            ApplicationUser? user = await userManager.FindByEmailAsync(email);
+            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
             return user is not null;
         }
 
@@ -22,14 +25,22 @@ namespace Life.Infrastructure.Persistence.Repositories.Auth
                 IsActive = true
             };
 
-            IdentityResult result = await userManager.CreateAsync(user, password);
+            IdentityResult result = await _userManager.CreateAsync(user, password);
 
             if (!result.Succeeded)
-            {
                 return new CreateIdentityUserResult(false, null, [.. result.Errors.Select(error => error.Description)]);
-            }
 
             return new CreateIdentityUserResult(true, user.Id, []);
         }
+
+        public async Task<AuthenticatedUser?> AuthenticateAsync(string email, string password, CancellationToken cancellationToken)
+        {
+            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null || !await _userManager.CheckPasswordAsync(user, password))
+                return null;
+
+            return new AuthenticatedUser(user.Id, user.Name, user.Email ?? string.Empty);
+        }   
     }
 }

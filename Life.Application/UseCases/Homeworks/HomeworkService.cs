@@ -5,7 +5,7 @@ namespace Life.Application.UseCases.Homeworks
 {
     public class HomeworkService(IHomeworkRepository homeworkRepository) : IHomeworkService
     {
-        private readonly IHomeworkRepository _homeworkRepository = homeworkRepository;
+        readonly IHomeworkRepository _homeworkRepository = homeworkRepository;
 
         public async Task<Homework> ExecuteCreateAsync(HomeworkRequest request, CancellationToken cancellationToken)
         {

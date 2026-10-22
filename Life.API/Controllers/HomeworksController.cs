@@ -2,16 +2,18 @@
 using Life.Application.Commons.Interfaces.Homework;
 using Life.Application.UseCases.Homeworks;
 using Life.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Life.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class HomeworksController(
         IHomeworkService homeworkService) : ControllerBase
     {
-        private readonly IHomeworkService _homeworkService = homeworkService;
+        readonly IHomeworkService _homeworkService = homeworkService;
 
         /// <summary>
         /// Creates a new homework.

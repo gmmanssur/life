@@ -8,14 +8,29 @@ namespace Life.API.Controllers.Auth
     [Route("api/auth/[controller]")]
     public class LoginController(ILoginService loginService) : ControllerBase
     {
-        private readonly ILoginService _loginService = loginService;
+        readonly ILoginService _loginService = loginService;
         
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
         {
-            await _loginService.LoginAsync(request, cancellationToken);
+            LoginResult result = await _loginService.LoginAsync(request, cancellationToken);
 
-            return Ok();
+            if (result.Succeeded)
+            {
+                return Ok(new
+                {
+                    userId = result.UserId,
+                    accessToken = result.AccessToken
+                });
+            }
+
+            if (result.ErrorCode == "ValidationFailed")
+                return BadRequest(new { errors = result.Errors });
+
+            if (result.ErrorCode == "EmailAlreadyExists")
+                return Conflict(new { errors = result.Errors });
+
+            return BadRequest(new { errors = result.Errors });
         }
     }
 }

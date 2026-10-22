@@ -34,6 +34,7 @@ namespace Life.Infrastructure
 
             services.AddScoped<IHomeworkRepository, HomeworkRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<ITokenProvider, TokenProvider>();
 
             return services;
         }

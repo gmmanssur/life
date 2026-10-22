@@ -6,7 +6,7 @@ namespace Life.Infrastructure.Persistence.Repositories.Homework
 {
     public class HomeworkRepository(LifeDbContext context) : IHomeworkRepository
     {
-        private readonly LifeDbContext _context = context;
+        readonly LifeDbContext _context = context;
 
         public async Task AddAsync(Domain.Entities.Homework? homework, CancellationToken cancellationToken)
         {

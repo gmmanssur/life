@@ -7,8 +7,8 @@ namespace Life.Application.UseCases.Auth.Register
 {
     public class RegisterService(IValidator<RegisterRequest> validator, IAuthRepository authRepository) : IRegisterService
     {
-        private readonly IValidator<RegisterRequest> _validator = validator;
-        private readonly IAuthRepository _authRepository = authRepository;
+        readonly IValidator<RegisterRequest> _validator = validator;
+        readonly IAuthRepository _authRepository = authRepository;
 
         public async Task<RegisterResult> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken)
         {
@@ -34,10 +34,7 @@ namespace Life.Application.UseCases.Auth.Register
                     "Email already registered");
             }
 
-            CreateIdentityUserResult creation = await _authRepository.CreateUserAsync(
-                request.Name,
-                request.Email,
-                request.Password);
+            CreateIdentityUserResult creation = await _authRepository.CreateUserAsync(request.Name, request.Email, request.Password);
 
             if (!creation.Succeeded)
                 return RegisterResult.Failure("IdentityCreationFailed", [.. creation.Errors]);

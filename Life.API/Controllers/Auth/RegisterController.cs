@@ -8,9 +8,9 @@ namespace Life.API.Controllers.Auth
     [Route("api/auth/[controller]")]
     public class RegisterController(IRegisterService registerService) : ControllerBase
     {
-        private readonly IRegisterService _registerService = registerService;
+        readonly IRegisterService _registerService = registerService;
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest request, CancellationToken cancellationToken)
         {
             RegisterResult result = await _registerService.RegisterAsync(request, cancellationToken);

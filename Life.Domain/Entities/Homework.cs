@@ -4,12 +4,12 @@ namespace Life.Domain.Entities;
 
 public class Homework
 {
-    public Guid Id { get; private set; }
-    public string Title { get; private set; }
-    public HomeworkPriority Priority { get; private set; }
-    public HomeworkFrequency Frequency { get; private set; }
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public HomeworkPriority Priority { get; set; }
+    public HomeworkFrequency Frequency { get; set; }
 
-    private Homework() { }
+    Homework() { }
 
     public Homework(
         string title,
@@ -36,7 +36,7 @@ public class Homework
         Frequency = frequency;
     }
 
-    private static void Validate(
+    static void Validate(
         string title,
         HomeworkPriority priority,
         HomeworkFrequency frequency)

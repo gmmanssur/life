@@ -4,6 +4,6 @@ namespace Life.Application.Commons.Interfaces.Auth.Login
 {
     public interface ILoginService
     {
-        Task LoginAsync(LoginRequest request, CancellationToken cancellationToken);
+        Task<LoginResult> LoginAsync(LoginRequest request, CancellationToken cancellationToken);
     }
 }
