@@ -9,15 +9,15 @@ namespace Life.API.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
-    public class HomeworksController(
-        IHomeworkService homeworkService) : ControllerBase
+    [Route("api/v1/[controller]")]
+    public class HomeworksController(IHomeworkService homeworkService) : ControllerBase
     {
         readonly IHomeworkService _homeworkService = homeworkService;
 
         /// <summary>
         /// Creates a new homework.
         /// </summary>
+        [ProducesResponseType(typeof(Homework), StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<IActionResult> Create(
             [FromBody] HomeworkRequest request,
@@ -37,6 +37,7 @@ namespace Life.API.Controllers
         /// <summary>
         /// Gets all homeworks.
         /// </summary>
+        [ProducesResponseType(typeof(List<Homework>), StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
@@ -51,6 +52,8 @@ namespace Life.API.Controllers
         /// <summary>
         /// Gets a homework by its ID.
         /// </summary>
+        [ProducesResponseType(typeof(Homework), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(
             [FromRoute] Guid id,
@@ -67,7 +70,9 @@ namespace Life.API.Controllers
         /// <summary>
         /// Updates an existing homework.
         /// </summary>
-        [HttpPut("{id:guid}")]
+        [ProducesResponseType(typeof(Homework), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [HttpPatch("{id:guid}")]
         public async Task<IActionResult> Update(
             [FromRoute] Guid id,
             [FromBody] HomeworkRequest request,
@@ -84,6 +89,8 @@ namespace Life.API.Controllers
         /// <summary>
         /// Deletes a homework by its ID.
         /// </summary>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(
             [FromRoute] Guid id,

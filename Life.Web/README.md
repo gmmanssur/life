@@ -2,6 +2,16 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.1.
 
+## API
+
+The frontend expects the .NET API to be available under `/api` with these endpoints:
+
+- `POST /api/auth/login` and `POST /api/auth/register` with `{ "email", "password", "name?" }`.
+- `GET /api/homeworks` returning an array of homework items.
+- `POST /api/homeworks` with `{ "title", "description", "dueDate" }`.
+
+Authentication responses may return `token` or `accessToken`; the frontend sends it as a Bearer token. Change `API_BASE_URL` in `src/app/services/api.ts` or configure a development proxy if your API uses another host. The API must allow the frontend origin through CORS when the frontend and API are hosted separately.
+
 ## Development server
 
 To start a local development server, run:

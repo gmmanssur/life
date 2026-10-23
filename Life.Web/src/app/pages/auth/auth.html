@@ -1,0 +1,44 @@
+<main class="auth-layout">
+  <section class="auth-story" aria-label="Study Life">
+    <a class="brand brand-light" routerLink="/login"><span class="brand-mark">s</span> study life</a>
+    <div class="story-copy">
+      <p class="eyebrow">SEU ESPAÇO DE ESTUDOS</p>
+      <h1>Menos correria.<br><em>Mais aprendizado.</em></h1>
+      <p>Organize tarefas, acompanhe prazos e deixe sua rotina de estudos mais leve.</p>
+    </div>
+    <div class="study-photo" role="img" aria-label="Caderno aberto em uma mesa de estudos">
+      <span>Um passo de cada vez.</span>
+    </div>
+    <p class="story-footnote">Um lugar para suas ideias saírem do papel.</p>
+  </section>
+
+  <section class="auth-panel">
+    <div class="auth-topline">
+      <span>{{ registerMode() ? 'JÁ TEM UMA CONTA?' : 'NOVO POR AQUI?' }}</span>
+      <a [routerLink]="registerMode() ? '/login' : '/register'">
+        {{ registerMode() ? 'Entrar' : 'Criar conta' }} <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="auth-form-wrap">
+      <p class="eyebrow">{{ registerMode() ? 'COMECE POR VOCÊ' : 'BEM-VINDO DE VOLTA' }}</p>
+      <h2>{{ registerMode() ? 'Crie sua conta' : 'Que bom ter você aqui.' }}</h2>
+      <p class="form-intro">{{ registerMode() ? 'Seus estudos merecem um espaço só deles.' : 'Entre para continuar de onde parou.' }}</p>
+      @if (registered()) { <div class="notice success" role="status">Conta criada. Agora entre com seu e-mail e senha.</div> }
+      @if (error()) { <div class="notice error" role="alert">{{ error() }}</div> }
+      <form (ngSubmit)="submit()">
+        @if (registerMode()) {
+          <label for="name">Seu nome</label>
+          <input id="name" name="name" [(ngModel)]="name" autocomplete="name" placeholder="Como podemos chamar você?" required>
+        }
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" [(ngModel)]="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+        <label for="password">Senha</label>
+        <input id="password" name="password" type="password" [(ngModel)]="password" [attr.autocomplete]="registerMode() ? 'new-password' : 'current-password'" placeholder="Mínimo de 8 caracteres" minlength="8" required>
+        @if (!registerMode()) { <div class="form-extra"><span>Use sua conta Study Life</span></div> }
+        <button class="primary-button" type="submit" [disabled]="loading()">{{ loading() ? 'Só um instante...' : registerMode() ? 'Criar minha conta' : 'Entrar na minha conta' }}<span aria-hidden="true">→</span></button>
+      </form>
+      <p class="switch-mode">{{ registerMode() ? 'Já tem cadastro?' : 'Ainda não tem uma conta?' }} <a [routerLink]="registerMode() ? '/login' : '/register'">{{ registerMode() ? 'Entre aqui' : 'Cadastre-se' }}</a></p>
+    </div>
+    <p class="auth-legal">Ao continuar, você concorda em usar o Study Life para organizar sua rotina de estudos.</p>
+  </section>
+</main>

@@ -1,6 +1,54 @@
-<!-- Tailwind Installation Test -->
-<div class="m-8 p-6 max-w-sm mx-auto bg-blue-600 rounded-xl shadow-lg flex items-center space-x-4">
-  <div class="text-xl font-medium text-white">
-    Tailwind is working! 🎉
-  </div>
+<div class="dashboard-shell">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/home"><span class="brand-mark">s</span><span>study life</span></a>
+    <div class="nav-label">ESPAÇO DE ESTUDO</div>
+    <a class="nav-item active" routerLink="/home"><span class="nav-icon">▦</span> Visão geral</a>
+    <button class="nav-item" type="button" (click)="createOpen.set(true)"><span class="nav-icon">＋</span> Novo homework</button>
+    <div class="sidebar-bottom">
+      <div class="profile-avatar">SL</div>
+      <div class="profile-copy"><strong>Minha rotina</strong><span>Seu espaço pessoal</span></div>
+      <button class="logout-button" type="button" (click)="logout()" aria-label="Sair da conta" title="Sair">↗</button>
+    </div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="topbar"><span>{{ todayLabel }}</span><span class="online-dot">SEU DIA, NO SEU RITMO</span></header>
+    <section class="welcome-row">
+      <div><p class="eyebrow">PAINEL DE ESTUDOS</p><h1>Vamos avançar<br><em>um pouco hoje?</em></h1><p class="welcome-copy">Organize o que vem pela frente. O próximo passo começa aqui.</p></div>
+      <button class="create-button" type="button" (click)="createOpen.set(true)"><span aria-hidden="true">＋</span> Criar homework</button>
+    </section>
+    <section class="summary-row" aria-label="Resumo dos trabalhos">
+      <div class="summary-item"><span class="summary-icon lime">↗</span><div><span>NA SUA LISTA</span><strong>{{ homeworks().length }}</strong></div></div>
+      <div class="summary-item"><span class="summary-icon coral">◷</span><div><span>PRÓXIMO PASSO</span><strong>{{ homeworks().length ? 'Em andamento' : 'Comece por aqui' }}</strong></div></div>
+    </section>
+    <section class="homework-section">
+      <div class="section-heading"><div><p class="eyebrow">SEU PLANEJAMENTO</p><h2>Meus homeworks <span>{{ homeworks().length }}</span></h2></div><button type="button" class="text-button" (click)="loadHomeworks()">Atualizar <span aria-hidden="true">↻</span></button></div>
+      @if (saved()) { <p class="inline-success" role="status">Homework criado com sucesso.</p> }
+      @if (loadError()) { <div class="load-error" role="alert">{{ loadError() }} <button type="button" (click)="loadHomeworks()">Tentar novamente</button></div> }
+      @if (loading()) {
+        <div class="empty-state"><span class="loader"></span><p>Carregando seus homeworks...</p></div>
+      } @else if (homeworks().length) {
+        <div class="homework-list">
+          @for (homework of homeworks(); track homework.id) {
+            <article class="homework-item"><div class="item-check" aria-hidden="true"></div><div class="item-copy"><h3>{{ homework.title }}</h3><p>{{ homework.description || 'Sem descrição' }}</p></div><span class="due-date">{{ homework.dueDate ? (homework.dueDate | date:'dd MMM, yyyy') : 'Sem prazo' }}</span></article>
+          }
+        </div>
+      } @else if (!loadError()) {
+        <div class="empty-state"><span class="empty-mark">✳</span><h3>Uma lista em branco é um bom começo.</h3><p>Adicione seu primeiro homework e tire uma tarefa da cabeça.</p><button type="button" class="text-button" (click)="createOpen.set(true)">Criar primeiro homework <span aria-hidden="true">→</span></button></div>
+      }
+    </section>
+  </main>
 </div>
+@if (createOpen()) {
+  <div class="modal-backdrop" (click)="createOpen.set(false)" (keydown.escape)="createOpen.set(false)">
+    <section class="create-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" (click)="$event.stopPropagation()">
+      <div class="modal-heading"><div><p class="eyebrow">MAIS UM PASSO</p><h2 id="modal-title">Novo homework</h2></div><button type="button" class="close-button" (click)="createOpen.set(false)" aria-label="Fechar">×</button></div>
+      @if (saveError()) { <p class="notice error" role="alert">{{ saveError() }}</p> }
+      <form (ngSubmit)="createHomework()">
+        <label for="homework-title">O que você precisa fazer?</label><input id="homework-title" name="title" [(ngModel)]="title" placeholder="Ex.: Exercícios de matemática" required maxlength="120">
+        <label for="homework-description">Detalhes <span>(opcional)</span></label><textarea id="homework-description" name="description" [(ngModel)]="description" placeholder="Anote o que não pode esquecer" rows="3"></textarea>
+        <label for="homework-date">Prazo <span>(opcional)</span></label><input id="homework-date" name="dueDate" type="date" [(ngModel)]="dueDate">
+        <div class="modal-actions"><button type="button" class="cancel-button" (click)="createOpen.set(false)">Cancelar</button><button class="create-button" type="submit" [disabled]="saving()">{{ saving() ? 'Salvando...' : 'Criar homework' }} <span aria-hidden="true">→</span></button></div>
+      </form>
+    </section>
+  </div>
+}
